@@ -6,17 +6,25 @@ using MySql.Data.MySqlClient;
 public class ConnectionSql
 {
     private readonly string _connectionString = "server=localhost;database=student;uid=root;pwd=root";
-        private MySqlConnection _conn;
+    private MySqlConnection _conn;
 
-    public MySqlConnection connectSql()
+    public MySqlConnection ConnectSql()
     {
+        try
+        {
+            Console.WriteLine("Connecting to DB...");
 
-        Console.WriteLine("Connecting to DB");
+            _conn = new MySqlConnection(_connectionString);
+            _conn.Open();
 
-        _conn = new MySqlConnection(_connectionString);
+            Console.WriteLine("Database connection successful");
 
-        Console.WriteLine(_conn == null ? "Datbase Connection Failed" : "Database connection successful");
-
-        return _conn;
+            return _conn;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Database connection failed: " + ex.Message);
+            return null;
+        }
     }
 }
